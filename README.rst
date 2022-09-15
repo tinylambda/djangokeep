@@ -1,0 +1,2 @@
+- verify django features
+- django best practice
