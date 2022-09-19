@@ -129,3 +129,30 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Use custom user model
 # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = "account.User"
+
+
+CELERY_BROKER_URL = "redis://:@127.0.0.1:6379/2"
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+
+CELERY_ENABLE_UTC = False
+
+CELERY_TIMEZONE = "Asia/Shanghai"
+
+CELERY_WORKER_PREFETCH_MULTIPLIER = 1
+
+CELERY_TASK_SERIALIZER = "json"
+
+CELERY_TASK_CREATE_MISSING_QUEUES = True
+
+CELERY_TASK_ACKS_LATE = True
+
+CELERY_TASK_ROUTES = {
+    "djangokeep.celery.debug_task": {"queue": "queueDebug"},
+}
+
+CELERY_TASK_DEFAULT_QUEUE = "celeryDefault"
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+CELERY_BEAT_MAX_LOOP_INTERVAL = 5
