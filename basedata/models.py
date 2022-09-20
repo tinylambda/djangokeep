@@ -25,7 +25,7 @@ class ProjectType(models.Model):
         return f"{self.name} standard price = {standard_price}"
 
     @admin.display(description="current standard price")
-    def standard_price_localized(self):
+    def standard_price_localized(self, none_value="-"):
         if self.standard_price is None:
-            return "-"
+            return none_value
         return number_format(self.standard_price, force_grouping=True)
