@@ -1,21 +1,8 @@
-import locale
-
 from django.contrib import admin
 from django.db import models
+from django.utils.formats import number_format
 
 from django.utils.translation import gettext_lazy as _
-
-
-def ensure_locale(default="en_US"):
-    def _ensure_locale(func):
-        def real_deco(*args, **kwargs):
-            if locale.getlocale(locale.LC_ALL)[0].startswith("C/"):
-                locale.setlocale(locale.LC_ALL, default)
-            return func(*args, **kwargs)
-
-        return real_deco
-
-    return _ensure_locale
 
 
 class ProjectType(models.Model):
@@ -38,10 +25,7 @@ class ProjectType(models.Model):
         return f"{self.name} standard price = {standard_price}"
 
     @admin.display(description="current standard price")
-    @ensure_locale()
     def standard_price_localized(self):
-        locale.setlocale(locale.LC_ALL, "en_US")
-
         if self.standard_price is None:
             return "-"
-        return locale.currency(self.standard_price, grouping=True)
+        return number_format(self.standard_price, force_grouping=True)
