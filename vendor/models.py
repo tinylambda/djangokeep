@@ -7,7 +7,7 @@ from basedata.models import ProjectType
 
 class Vendor(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    desired_project_type = models.ManyToManyField(ProjectType)
+    desired_project_type = models.ManyToManyField(ProjectType, blank=True)
     vetted = models.BooleanField(_("vetted"), default=False)
     date_updated = models.DateTimeField(auto_now=True)
     date_added = models.DateTimeField(auto_now_add=True)
