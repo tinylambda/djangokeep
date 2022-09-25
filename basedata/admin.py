@@ -1,7 +1,6 @@
-from django import forms
 from django.contrib import admin
 
-from .models import ProjectType
+from .models import ProjectType, ProfileVendorPrice
 
 
 class BaseDataModelAdmin(admin.ModelAdmin):
@@ -22,8 +21,6 @@ class ProjectTypeAdmin(BaseDataModelAdmin):
     list_display = (
         "code",
         "name",
-        "standard_price_localized",
-        "remarks",
         "date_updated",
         "date_added",
     )
@@ -31,8 +28,18 @@ class ProjectTypeAdmin(BaseDataModelAdmin):
     fields = (
         "code",
         "name",
-        "standard_price",
-        "standard_price_localized",
-        "remarks",
     )
-    readonly_fields = ("standard_price_localized",)
+
+
+@admin.register(ProfileVendorPrice)
+class ProfileVendorProfileAdmin(BaseDataModelAdmin):
+    list_display = (
+        "vendor",
+        "project_type",
+        "price_inferred",
+        "ratio_of_customer_price_percent",
+    )
+
+    fields = ("vendor", "project_type", "price_inferred", "ratio_of_customer_price")
+
+    readonly_fields = ("ratio_of_customer_price_percent",)
